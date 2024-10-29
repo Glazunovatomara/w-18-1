@@ -22,8 +22,10 @@
     gap: 10px;
     border: 3px solid #e73333;
     border-radius: 9px;
-    background: #fddb52;
     background: #fde910;
+    min-height: 520px;
+}
+.turn {
     cursor: pointer;
 }
 .subtitle {
@@ -35,8 +37,9 @@
     flex-direction: column;
     gap: 10px;
 }
-.info-text {}
 img {
+    height: 256px;
+    object-fit: cover;
 }
 .other-information {
     color: #ffffff;
@@ -46,6 +49,49 @@ img {
     color: #e73333;
     font-weight: 600;
 }
+.rating {
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+}
+.rating-body {
+    position: relative;
+}
+.rating-body::before {
+    content: "★★★★★";
+    display: block;
+    color: #766767;
+}
 
-
-
+.rating-active {
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.rating-active::before {
+    content: "★★★★★";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    color: #e73333;
+}
+.rating-items {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+.rating-item {
+    flex: 0 0 20%;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}

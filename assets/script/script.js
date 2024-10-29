@@ -105,21 +105,36 @@ const addBlock = (obj) => {
     const section = document.createElement('section');
     section.className += 'card';
     section.innerHTML = `
-    <h2 class="subtitle">${obj.name}</h2>
+    <div class="turn">
     <div class="info">
+        <h2 class="subtitle">${obj.name}</h2>
         <p class="info-text"><span class="text-color">Вселенная:</span> ${obj.universe}</p>
         <p class="info-text"><span class="text-color">Альтер эго:</span> ${obj.alterego}</p>
-        <p class="info-text "><span class="text-color">Род деятельности:</span> ${obj.occupation}</p>
+        <p class="info-text"><span class="text-color">Род деятельности:</span> ${obj.occupation}</p>
         <p class="info-text"><span class="text-color">Друзья:</span> ${obj.friends}</p>
         <p class="info-text "><span class="text-color">Суперсилы:</span> ${obj.superpowers}</p>
         <img src="${obj.url}" alt="${obj.name}">
-        <div class="evaluate"></div>
     </div> 
     <div class="other-information">
         <p class="info-text">${obj.info}</p>
+    </div>
+    </div>
+    <div class="rating" id="${obj.name}">
+      <div class="rating-body"> 
+        <div class="rating-active"></div> 
+          <div class="rating-items">
+            <input type="radio" name="rat" id="" class="rating-item" value="1">
+            <input type="radio" name="rat" id="" class="rating-item" value="2">
+            <input type="radio" name="rat" id="" class="rating-item" value="3">
+            <input type="radio" name="rat" id="" class="rating-item" value="4">
+            <input type="radio" name="rat" id="" class="rating-item" value="5">
+          </div>
+      </div>
     </div>`
 return section
 };
+
+
 
 const list = document.querySelector('.list');
 
@@ -128,7 +143,6 @@ arr.forEach((element) => {
 });
 
 const cards = document.querySelectorAll('.card')
-const forwardBlocks = document.querySelectorAll('.info')
 const backBlocks = document.querySelectorAll('.other-information');
 
 for(let element of backBlocks) {
@@ -137,7 +151,10 @@ for(let element of backBlocks) {
 
 //открытие доп информации при клике
 for(let card of cards) {
-    card.addEventListener('click', function() {
+  const turn = card.querySelector('.turn')
+  const ratingBlock = card.querySelector('.rating')
+
+  turn.addEventListener('click', function() {
         const forwardBlock = card.querySelector('.info');
         const backBlock = card.querySelector('.other-information');
         
@@ -145,10 +162,37 @@ for(let card of cards) {
             forwardBlock.style.display = 'none';
             backBlock.style.display = '';
             card.style.background = '#e73333';
+            ratingBlock.style.display = 'none';
         } else {
             forwardBlock.style.display = '';
             backBlock.style.display = 'none';
             card.style.background = '';
+            ratingBlock.style.display = ''
         }
     });
+
+};
+
+//звездочки система баллов
+
+const ratings = document.querySelectorAll('.rating');
+
+for (let rating of ratings) {
+
+  rating.addEventListener('click', function() {
+    let radio = document.querySelectorAll(".rating-item");
+
+    for(i=0; i<radio.length; i++) {
+
+      if(radio[i].checked) {
+        const radioValue = radio[i].value
+        let res = radioValue * 20
+        rating.querySelector('.rating-active').style.width = `${res}%`
+        
+        localStorage.setItem(rating.id,radioValue)
+      }
+
+      
+    }
+  })
 };
